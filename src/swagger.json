@@ -447,17 +447,11 @@
                             "schema": {
                                 "type": "object",
                                 "properties": {
-                                    "title": {
+                                    "name": {
                                         "type": "string"
                                     },
-                                    "body":{
+                                    "email":{
                                         "type": "string"
-                                    },
-                                    "tags":{
-                                        "type": "array",
-                                        "items": {
-                                            "type": "string"
-                                        }           
                                     }
                                 }
                             }

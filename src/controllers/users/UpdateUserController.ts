@@ -6,7 +6,8 @@ class UpdateUserController {
         try {
             const { name, email } = request.body;
             const {id} = request.params;
-            if(!name && !name){
+
+            if(!name && !email){
                 return response.status(400).send({message: 'Submit fields for updating user'});
             }
             await User.findOneAndUpdate(
