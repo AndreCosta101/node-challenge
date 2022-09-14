@@ -223,7 +223,7 @@
             },
             "delete": {
                 "tags": ["Post"],
-                "summary": "delete post",
+                "summary": "Delete post",
                 "security": [
                     { "bearerAuth": []}
                 ],
@@ -273,13 +273,298 @@
                 }
             }
         },
-        "components": {
-            "securitySchemes" : {
-                "bearerAuth": {
-                    "type": "http",
-                    "scheme": "bearer",
-                    "bearerFormat": "JWT"
+        "/api/auth": {
+            "post": {
+                "tags": ["Session"],
+                "summary": "User Authentication",
+                "description": "User Authentication",
+                "requestBody": {
+                    "content": {
+                        "application/json":{
+                            "schema":{
+                                "type": "object",
+                                "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "200": {
+                        "description": "Success"
+                    },
+                    "400": {
+                        "description": "Incorrect email and/or password."
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
                 }
+            }
+        },
+        "/api/user":{
+            "post" : {
+                "tags": ["User"],
+                "summary": "Create a user",
+                "requestBody":{
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "email":{
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "201":{
+                        "description": "Created"
+                    },
+                    "500":{
+                        "description": "Internal Server Error"
+                    },
+                    "400":{
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
+        "/api/users":{
+            "get": {
+                "tags": ["User"],
+                "summary": "List all users",
+                "security": [
+                    { "bearerAuth": []}
+                ],
+                "responses":{
+                    "201":{
+                        "description": "Success",
+                        "content": {
+                            "application/json":{
+                                "schema":{
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "name": {
+                                                "type": "string"
+                                            },
+                                            "email":{
+                                                "type": "string"
+                                            },
+                                            "password": {
+                                                "type": "string"
+                                            }
+                                        }
+
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description": "Internal Server Error"
+                    },
+                    "400":{
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
+        "/api/user/{id}":{
+            "get": {
+                "tags": ["User"],
+                "summary": "Show a user",
+                "security": [
+                    { "bearerAuth": []}
+                ],
+                "parameters": [
+                    {
+                       "name": "id",
+                       "in": "path",
+                       "description": "Post id",
+                       "required": true,
+                       "schema": {
+                        "type": "string"
+                       } 
+                    }
+                ],
+                "responses":{
+                    "201":{
+                        "description": "Success",
+                        "content": {
+                            "application/json":{
+                                "schema":{
+                                    "type": "object",
+                                    "properties": {
+                                        "name": {
+                                            "type": "string"
+                                        },
+                                        "email":{
+                                            "type": "string"
+                                        },
+                                        "password": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description": "Internal Server Error"
+                    },
+                    "400":{
+                        "description": "Bad Request"
+                    }
+                }
+            },
+            "put": {
+                "tags": ["User"],
+                "summary": "Update user",
+                "security": [
+                    { "bearerAuth": []}
+                ],
+                "requestBody":{
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "title": {
+                                        "type": "string"
+                                    },
+                                    "body":{
+                                        "type": "string"
+                                    },
+                                    "tags":{
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }           
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                       "name": "id",
+                       "in": "path",
+                       "description": "Post id",
+                       "required": true,
+                       "schema": {
+                        "type": "string"
+                       } 
+                    }
+                ],
+                "responses":{
+                    "201":{
+                        "description": "Success",
+                        "content": {
+                            "application/json":{
+                                "schema":{
+                                    "type": "object",
+                                    "properties": {
+                                        "title": {
+                                            "type": "string"
+                                        },
+                                        "body":{
+                                            "type": "string"
+                                        },
+                                        "tags":{
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            }           
+                                        }
+                                
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description": "Internal Server Error"
+                    },
+                    "400":{
+                        "description": "Bad Request"
+                    }
+                }
+            },
+            "delete": {
+                "tags": ["User"],
+                "summary": "Delete user",
+                "security": [
+                    { "bearerAuth": []}
+                ],
+                "parameters": [
+                    {
+                       "name": "id",
+                       "in": "path",
+                       "description": "User id",
+                       "required": true,
+                       "schema": {
+                        "type": "string"
+                       } 
+                    }
+                ],
+                "responses":{
+                    "201":{
+                        "description": "Success",
+                        "content": {
+                            "application/json":{
+                                "schema":{
+                                    "type": "object",
+                                    "properties": {
+                                        "name": {
+                                            "type": "string"
+                                        },
+                                        "email":{
+                                            "type": "string"
+                                        },
+                                        "password": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description": "Internal Server Error"
+                    },
+                    "400":{
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        }
+
+    },
+    "components": {
+        "securitySchemes" : {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
             }
         }
     }
