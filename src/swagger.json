@@ -1,0 +1,93 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+       "title": "Node-Challenge Documentation",
+       "description": "Candidate: Andre Costa",
+       "contact": {
+            "email": "andre.costa101@gmail.com"
+       }
+    },
+    "paths":{
+        "/api/post":{
+            "post" : {
+                "tags": ["Post"],
+                "summary": "Create a post",
+                "requestBody":{
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "title": {
+                                        "type": "string"
+                                    },
+                                    "body":{
+                                        "type": "string"
+                                    },
+                                    "tags":{
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }           
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "201":{
+                        "description": "Created"
+                    },
+                    "500":{
+                        "description": "Internal Server Error"
+                    },
+                    "400":{
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
+        "/api/posts":{
+            "get": {
+                "tags": ["Post"],
+                "summary": "List all posts",
+                "responses":{
+                    "201":{
+                        "description": "Success",
+                        "content": {
+                            "application/json":{
+                                "schema":{
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "title": {
+                                                "type": "string"
+                                            },
+                                            "body":{
+                                                "type": "string"
+                                            },
+                                            "tags":{
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "string"
+                                                }           
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description": "Internal Server Error"
+                    },
+                    "400":{
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        }
+    }
+}

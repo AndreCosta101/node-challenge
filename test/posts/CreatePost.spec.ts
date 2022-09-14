@@ -1,46 +1,46 @@
 import { CreatePostController } from "../../src/controllers/posts/CreatePostController";
-import { Request, Response } from 'express';
-// import mockingoose from 'mockingoose';
-const mockingoose = require('mockingoose');
-import Post from '../../src/models/schemas/Post';
+import { getMockReq, getMockRes } from '@jest-mock/express'
 
-jest.setTimeout(10000)
+jest.mock('mongoose')
+jest.mock('express')
+
+
+const reqSucceed = getMockReq({ body: { title: 'título', body: 'conteúdo', tags: [] } })
+const reqError = getMockReq({ body: { tags: [] } })
+const { res, next, clearMockRes } = getMockRes()
 
 describe('Create Post', () => {
+    let createPostController: CreatePostController
 
-        it('should be able to create a post', async (done) => {
-            const post = {
-                    title: 'XXX',
-                    body: 'body',
-                    tags: []
-            }
-            mockingoose(Post).toReturn(post, 'create')
+    beforeEach(()=>{
+        createPostController = new CreatePostController()
+    })
 
-            const mockRequest = {
-                body : {
-                    title: 'RAFA',
-                    body: 'body',
-                    tags: []
-                }
-            } as Request;
-    
-            const mockResponse: any = {
-                json: jest.fn(),
-                status: jest.fn(),
-              } as unknown as Response;
+    it('should be defined', () => {
+        expect(createPostController).toBeDefined()
+    })
 
-            const createPostController = new CreatePostController();
-                
-            const response = await createPostController.handle(mockRequest, mockResponse)
-            
-
-            // expect(response).toContain({
-            //     title: 'XXX',
-            //     body: 'body',
-            //     tags: []
-            // })
-            done()
+    describe('CreatePostController handle method', () => {
         
+        it('should have handle method ', () => {
+            expect(createPostController.handle).toBeDefined()
         })
-    
+
+        it('should be able to create a post', () => {
+            const postSpy = jest.spyOn(createPostController, 'handle')
+
+            createPostController.handle(reqSucceed, res)
+
+            expect(postSpy).toHaveBeenCalled()
+        })
+
+
+        it('should return an error if some of the mandatory parameters is missing', () => {
+            try {
+                createPostController.handle(reqError, res)
+            } catch (error) {
+                expect(error).toThrowError()
+            }
+        })
+    })
 })
