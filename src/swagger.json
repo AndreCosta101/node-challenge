@@ -12,6 +12,9 @@
             "post" : {
                 "tags": ["Post"],
                 "summary": "Create a post",
+                "security": [
+                    { "bearerAuth": []}
+                ],
                 "requestBody":{
                     "content": {
                         "application/json": {
@@ -52,6 +55,9 @@
             "get": {
                 "tags": ["Post"],
                 "summary": "List all posts",
+                "security": [
+                    { "bearerAuth": []}
+                ],
                 "responses":{
                     "201":{
                         "description": "Success",
@@ -86,6 +92,193 @@
                     "400":{
                         "description": "Bad Request"
                     }
+                }
+            }
+        },
+        "/api/post/{id}":{
+            "get": {
+                "tags": ["Post"],
+                "summary": "List all posts",
+                "security": [
+                    { "bearerAuth": []}
+                ],
+                "parameters": [
+                    {
+                       "name": "id",
+                       "in": "path",
+                       "description": "Post id",
+                       "required": true,
+                       "schema": {
+                        "type": "string"
+                       } 
+                    }
+                ],
+                "responses":{
+                    "201":{
+                        "description": "Success",
+                        "content": {
+                            "application/json":{
+                                "schema":{
+                                    "type": "object",
+                                    "properties": {
+                                        "title": {
+                                            "type": "string"
+                                        },
+                                        "body":{
+                                            "type": "string"
+                                        },
+                                        "tags":{
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            }           
+                                        }
+                                
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description": "Internal Server Error"
+                    },
+                    "400":{
+                        "description": "Bad Request"
+                    }
+                }
+            },
+            "put": {
+                "tags": ["Post"],
+                "summary": "Update post",
+                "security": [
+                    { "bearerAuth": []}
+                ],
+                "requestBody":{
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "title": {
+                                        "type": "string"
+                                    },
+                                    "body":{
+                                        "type": "string"
+                                    },
+                                    "tags":{
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }           
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                       "name": "id",
+                       "in": "path",
+                       "description": "Post id",
+                       "required": true,
+                       "schema": {
+                        "type": "string"
+                       } 
+                    }
+                ],
+                "responses":{
+                    "201":{
+                        "description": "Success",
+                        "content": {
+                            "application/json":{
+                                "schema":{
+                                    "type": "object",
+                                    "properties": {
+                                        "title": {
+                                            "type": "string"
+                                        },
+                                        "body":{
+                                            "type": "string"
+                                        },
+                                        "tags":{
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            }           
+                                        }
+                                
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description": "Internal Server Error"
+                    },
+                    "400":{
+                        "description": "Bad Request"
+                    }
+                }
+            },
+            "delete": {
+                "tags": ["Post"],
+                "summary": "delete post",
+                "security": [
+                    { "bearerAuth": []}
+                ],
+                "parameters": [
+                    {
+                       "name": "id",
+                       "in": "path",
+                       "description": "Post id",
+                       "required": true,
+                       "schema": {
+                        "type": "string"
+                       } 
+                    }
+                ],
+                "responses":{
+                    "201":{
+                        "description": "Success",
+                        "content": {
+                            "application/json":{
+                                "schema":{
+                                    "type": "object",
+                                    "properties": {
+                                        "title": {
+                                            "type": "string"
+                                        },
+                                        "body":{
+                                            "type": "string"
+                                        },
+                                        "tags":{
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            }           
+                                        }
+                                
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description": "Internal Server Error"
+                    },
+                    "400":{
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
+        "components": {
+            "securitySchemes" : {
+                "bearerAuth": {
+                    "type": "http",
+                    "scheme": "bearer",
+                    "bearerFormat": "JWT"
                 }
             }
         }
